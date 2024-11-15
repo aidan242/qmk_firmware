@@ -34,7 +34,8 @@ enum custom_keycodes {
     EMAL_MACRO = SAFE_RANGE,
     LOVE_MACRO,
     HAMM_MACRO,
-    SLIM_MACRO
+    SLIM_MACRO,
+    HELP_MACRO
 };
 
 uint16_t rgb_timer = 0;
@@ -46,6 +47,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 // Replace this with your email address
                 SEND_STRING("Jasmineaizely@gmail.com");
+                rgb_matrix_enable();
+                rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+                rgb_matrix_sethsv(HSV_WHITE);
+                rgb_timer = timer_read();
             }
             return false;
         case LOVE_MACRO:
@@ -75,6 +80,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 rgb_timer = timer_read();
             }
             return false;
+        case HELP_MACRO:
+            if (record->event.pressed) {
+                rgb_matrix_enable();
+                rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+                rgb_matrix_sethsv(HSV_PURPLE);
+                SEND_STRING("JASKEEB - HELP\nCustom keyboard w/ a couple helpful macros I use. RGB lights will flash for 1s when a macro is played, each macro has their own color.\n\nMACROS:\nHelp Macro: Fn + Home\nEmail Macro: Fn + M\nRecord Macro 1: Fn + 1\nRecord Macro 2: Fn + 2\nStop recording Macro: Fn + End\nPlay Macro 1: Fn + F1\nPlay Macro 2: Fn + F2\n\nNOTE: Do not press Play Macro while recording any macros. This will cause an infinite loop and the keyboard will crash. \nCan be reset by unplugging + recording new macro.\n\nThere are a few secret macros to find, none that are helpful at all.");
+                rgb_timer = timer_read();
+            }
+            return false;
         case DM_REC1:
             if (record->event.pressed) {
                 rgb_matrix_enable();
@@ -89,7 +103,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 rgb_matrix_sethsv(HSV_BLUE);
                 rgb_timer = timer_read();
             }
-            return true;
+            return false;
         case DM_REC2:
             if (record->event.pressed) {
                 rgb_matrix_enable();
@@ -104,10 +118,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 rgb_matrix_sethsv(HSV_YELLOW);
                 rgb_timer = timer_read();
             }
-            return true;
+            return false;
         case DM_RSTP:
             rgb_matrix_disable();
-            return true;
+            return false;
         default:
             return true;
     }
@@ -138,9 +152,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [FN] = LAYOUT_tkl_ansi(
         LOVE_MACRO,           DM_PLY1,  DM_PLY2,  KC_TASK,  KC_FLXP,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,    KC_VOLU,  _______,  _______,  RGB_MOD,
-        _______,  DM_REC1,  DM_REC2,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,
+        _______,  DM_REC1,  DM_REC2,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  HELP_MACRO,  _______,
         BL_TOGG,  BL_STEP,  BL_UP,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  DM_RSTP,  _______,
-        _______,  _______,  BL_DOWN,  _______,  _______,  _______,  HAMM_MACRO,  _______,  _______,  _______,  _______,  _______,              _______,
+        _______,  _______,  BL_DOWN,  _______,  _______,  _______,  _______,  _______,  HAMM_MACRO,  _______,  _______,  _______,              _______,
         _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  EMAL_MACRO,  _______,  _______,  _______,              _______,            _______,
         SLIM_MACRO,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______),
 
