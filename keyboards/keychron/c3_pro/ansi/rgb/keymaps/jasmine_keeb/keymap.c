@@ -15,11 +15,6 @@
  */
 
 #include QMK_KEYBOARD_H
-// Disable RGB effects
-// #undef RGBLIGHT_ANIMATIONS
-// #define RGB_DISABLE_WHEN_USB_SUSPENDED true
-// #define RGBLIGHT_ENABLE false
-// #define RGB_MATRIX_ENABLE false
 
 enum layers{
   BASE,
